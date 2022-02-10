@@ -5,8 +5,9 @@
   const modalForm = document.querySelector(".modal__form");
   const modalCheckbox = document.querySelector(".modal__checkbox");
   const modalCheckboxField = document.querySelector(".modal__input_discount");
+  const modalWindow = document.querySelector(".overlay");
 
-  document.querySelector(".overlay").classList.remove("active");
+  modalWindow.classList.remove("active");
 
   const createRow = (item) => {
     const tableElem = document.createElement("tr");
@@ -35,4 +36,21 @@
   };
 
   renderGoods(dataGoods);
+
+  const addProductButton = document.querySelector(".panel__add-goods");
+  addProductButton.addEventListener("click", () => {
+    modalWindow.classList.add("active");
+  });
+
+  document.querySelector(".modal__close").addEventListener("click", () => {
+    modalWindow.classList.remove("active");
+  });
+
+  document.querySelector(".overlay__modal").addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  modalWindow.addEventListener("click", (e) => {
+    modalWindow.classList.remove("active");
+  });
 })();
