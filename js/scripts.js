@@ -8,16 +8,16 @@
 
   document.querySelector(".overlay").classList.remove("active");
 
-  const createRow = (id, title, category, units, count, price) => {
+  const createRow = (item) => {
     const tableElem = document.createElement("tr");
     tableElem.innerHTML = `
-    <td class="table__cell">${id}</td>
-    <td class="table__cell table__cell_left table__cell_name">${title}</td>
-    <td class="table__cell table__cell_left">${category}</td>
-    <td class="table__cell">${units}</td>
-    <td class="table__cell">${count}</td>
-    <td class="table__cell">$${price}</td>
-    <td class="table__cell">$${price * count}</td>
+    <td class="table__cell">${item.id}</td>
+    <td class="table__cell table__cell_left table__cell_name">${item.title}</td>
+    <td class="table__cell table__cell_left">${item.category}</td>
+    <td class="table__cell">${item.units}</td>
+    <td class="table__cell">${item.count}</td>
+    <td class="table__cell">$${item.price}</td>
+    <td class="table__cell">$${item.price * item.count}</td>
     <td class="table__cell table__cell_btn-wrapper">
       <button class="table__btn table__btn_pic"></button>
       <button class="table__btn table__btn_edit"></button>
@@ -29,14 +29,7 @@
 
   const renderGoods = (arr) => {
     for (const item of arr) {
-      const tableElem = createRow(
-        item.id,
-        item.title,
-        item.category,
-        item.units,
-        item.count,
-        item.price
-      );
+      const tableElem = createRow(item);
       document.querySelector(".table__body").append(tableElem);
     }
   };
