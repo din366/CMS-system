@@ -1,4 +1,4 @@
-const dataGoods = [
+let dataGoods = [
   {
     id: 253842678,
     title: "Смартфон Xiaomi 11T 8/128GB",
