@@ -30,11 +30,26 @@
     return tableElem;
   };
 
+  const calculateTotalTablePrice = (data) => {
+    const resultValue = data.reduce((result, item) => {
+      return (result += item.price * item.count);
+    }, 0);
+
+    document.querySelector(
+      ".crm__total-price"
+    ).textContent = `$ ${resultValue}`;
+  };
+
+  const addItemInTable = (item) => {
+    const tableElem = createRow(item);
+    document.querySelector(".table__body").append(tableElem);
+  };
+
   const renderGoods = (arr) => {
     for (const item of arr) {
-      const tableElem = createRow(item);
-      document.querySelector(".table__body").append(tableElem);
+      addItemInTable(item);
     }
+    calculateTotalTablePrice(dataGoods);
   };
 
   const deleteItem = (e) => {
@@ -48,6 +63,7 @@
     });
     console.log(dataGoods);
     e.target.closest("tr").remove();
+    calculateTotalTablePrice(dataGoods);
   };
 
   renderGoods(dataGoods);
@@ -55,6 +71,9 @@
   const addProductButton = document.querySelector(".panel__add-goods");
   addProductButton.addEventListener("click", () => {
     modalWindow.classList.add("active");
+    modalWindow.querySelector(".vendor-code__id").textContent = Math.floor(
+      Math.random() * 1e9
+    );
   });
 
   modalWindow.addEventListener("click", (e) => {
@@ -64,6 +83,7 @@
       target.closest(".modal__close")
     ) {
       modalWindow.classList.remove("active");
+      modalForm.reset();
     }
   });
 
@@ -71,5 +91,59 @@
     if (e.target.closest(".table__btn_del")) {
       deleteItem(e);
     }
+  });
+
+  modalForm.addEventListener("click", (e) => {
+    if (e.target === modalForm.discount) {
+      if (modalForm.discount.checked === true) {
+        modalForm.discount_count.disabled = false;
+      } else {
+        modalForm.discount_count.value = "";
+        modalForm.discount_count.disabled = true;
+      }
+    }
+  });
+
+  const calculateModalPrice = (input) => {
+    input.addEventListener("change", () => {
+      modalForm.total.value = `$ ${
+        modalForm.price.value * modalForm.count.value
+      }`;
+    });
+  };
+
+  // Функция вызывается для двух инпутов, чтобы при изменении значения в любом из них пересчитывалось значение
+  calculateModalPrice(modalForm.price);
+  calculateModalPrice(modalForm.count);
+
+  modalForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const { name, category, units, discount_count, description, count, price } =
+      modalForm;
+    const id = modalWindow.querySelector(".vendor-code__id").textContent;
+
+    const item = {
+      id: id,
+      title: name.value,
+      price: +price.value,
+      description: description.value,
+      category: category.value,
+      discont: !!discount_count.value, // ? true/false. true сейчас при любом значении в инпуте
+      count: +count.value,
+      units: units.value,
+      images: {
+        // ? Пока не трогал
+        small: "img/smrtxiaomi11t-m.jpg",
+        big: "img/smrtxiaomi11t-b.jpg",
+      },
+    };
+
+    dataGoods.push(item);
+    console.log(dataGoods);
+    addItemInTable(item);
+    modalWindow.classList.remove("active");
+    modalForm.reset();
+
+    calculateTotalTablePrice(dataGoods);
   });
 })();
