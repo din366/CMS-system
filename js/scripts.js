@@ -83,6 +83,7 @@
       target.closest(".modal__close")
     ) {
       modalWindow.classList.remove("active");
+      modalForm.discount_count.disabled = true;
       modalForm.reset();
     }
   });
@@ -142,6 +143,7 @@
     console.log(dataGoods);
     addItemInTable(item);
     modalWindow.classList.remove("active");
+    modalForm.discount_count.disabled = true;
     modalForm.reset();
 
     calculateTotalTablePrice(dataGoods);
