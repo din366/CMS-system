@@ -12,7 +12,7 @@ export const createRow = (item) => {
   <td class="table__cell">$${price}</td>
   <td class="table__cell">$${price * count}</td>
   <td class="table__cell table__cell_btn-wrapper">
-    <button class="table__btn table__btn_pic"></button>
+    <button class="table__btn table__btn_pic" data-pic="https://is.gd/XP4wYl"></button>
     <button class="table__btn table__btn_edit"></button>
     <button class="table__btn table__btn_del"></button>
   </td>
@@ -32,6 +32,7 @@ export const renderGoods = (arr) => {
   for (const item of arr) {
     addItemInTable(item);
   }
+  // eslint-disable-next-line no-undef
   calculateTotalTablePrice(dataGoods);
 };
 

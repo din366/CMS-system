@@ -1,4 +1,4 @@
-import { deleteItem, addItemInArray } from "./actions.js";
+import { deleteItem, addItemInArray, showImageItem } from "./actions.js";
 import { calculateTotalTablePrice } from "./render.js";
 
 export const modalForm = document.querySelector(".modal__form");
@@ -40,13 +40,15 @@ export const listeners = () => {
 
     const id = modalWindow.querySelector(".vendor-code__id").textContent;
 
+    // eslint-disable-next-line no-undef
     addItemInArray(dataGoods, id, modalForm);
+    // eslint-disable-next-line no-undef
     console.log(dataGoods);
 
     modalWindow.classList.remove("active");
     modalForm.discount_count.disabled = true;
     modalForm.reset();
-
+    // eslint-disable-next-line no-undef
     calculateTotalTablePrice(dataGoods);
   });
 
@@ -58,7 +60,12 @@ export const listeners = () => {
 
   itemTable.addEventListener("click", (e) => {
     if (e.target.closest(".table__btn_del")) {
+      // eslint-disable-next-line no-undef
       dataGoods = deleteItem(e, dataGoods);
+    }
+
+    if (e.target.classList.contains('table__btn_pic')) {
+      showImageItem(e);
     }
   });
 };

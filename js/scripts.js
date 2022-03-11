@@ -7,6 +7,7 @@ import {
 
 {
   /* Display elements from an array */
+  // eslint-disable-next-line no-undef
   renderGoods(dataGoods);
 
   listeners();
