@@ -21,7 +21,6 @@ export const deleteItem = (e, data) => {
 };
 
 export const showImageItem = (e) => {
-  console.log(e);
   if (e.target.classList.contains('table__btn_pic')) {
     const widthWindow = 800;
     const heightWindow = 600;
@@ -34,14 +33,37 @@ export const showImageItem = (e) => {
       style = `display: flex; justify-content: center; align-items: center;`;
     const img = newWinImage.document.createElement('img');
     img.src = e.target.dataset.pic;
+    img.style.width = '100%';
+
+    const itemId = e.target.closest('tr').querySelectorAll('td')[0].textContent;
+    for (const item of window.dataGoods) {
+      if (item.id === +itemId) {
+        img.src = item.images.big;
+        break;
+      }
+    }
     newWinImage.document.body.append(img);
   }
 };
 
-export const addItemInArray = (array, id, modalForm) => {
+export const toBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  // у FileReader есть события load и error
+
+  reader.addEventListener('loadend', () => {
+    resolve(reader.result);
+  });
+  reader.addEventListener('error', (err) => {
+    reject(err);
+  });
+
+  reader.readAsDataURL(file);
+});
+
+export const addItemInArray = async (array, id, modalForm) => {
   // eslint-disable-next-line camelcase
-  const { name, category, units, discount_count, description, count, price } =
-    modalForm;
+  const { name, category, units, discount_count,
+    description, count, price, image } = modalForm;
   const item = {
     id: +id,
     title: name.value,
@@ -50,17 +72,13 @@ export const addItemInArray = (array, id, modalForm) => {
     category: category.value,
     // eslint-disable-next-line camelcase
     discont: !!discount_count.value,
-    // ? true/false. true сейчас при любом значении в инпуте
     count: +count.value,
     units: units.value,
     images: {
-      // ? Пока не трогал
-      small: "img/smrtxiaomi11t-m.jpg",
-      big: "img/smrtxiaomi11t-b.jpg",
+      big: `${image.files[0] ? await toBase64(image.files[0]) : null}`,
     },
   };
 
   array.push(item);
   addItemInTable(item);
 };
-

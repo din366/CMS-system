@@ -1,16 +1,20 @@
-import { deleteItem, addItemInArray, showImageItem } from "./actions.js";
+import { deleteItem,
+  addItemInArray,
+  showImageItem,
+} from "./actions.js";
+
 import { calculateTotalTablePrice } from "./render.js";
 
 export const modalForm = document.querySelector(".modal__form");
 
 export const listeners = () => {
-  // const modalTitle = document.querySelector(".modal__title");
-  // const modalCheckbox = document.querySelector(".modal__checkbox");
-  // eslint-disable-next-line max-len
-  // const modalCheckboxField = document.querySelector(".modal__input_discount");
   const modalWindow = document.querySelector(".overlay");
   const itemTable = document.querySelector(".goods__table");
   const addProductButton = document.querySelector(".panel__add-goods");
+
+  const file = document.querySelector('.modal__file');
+  const image = document.querySelector('.sendingImagePreview');
+  const errorMessage = document.querySelector('.error_message');
 
   modalWindow.addEventListener("click", (e) => {
     const target = e.target;
@@ -48,6 +52,7 @@ export const listeners = () => {
     modalWindow.classList.remove("active");
     modalForm.discount_count.disabled = true;
     modalForm.reset();
+    errorMessage.style.display = 'none';
     // eslint-disable-next-line no-undef
     calculateTotalTablePrice(dataGoods);
   });
@@ -66,6 +71,21 @@ export const listeners = () => {
 
     if (e.target.classList.contains('table__btn_pic')) {
       showImageItem(e);
+    }
+  });
+
+  file.addEventListener('change', async () => {
+    if (file.files.length > 0) { // Проверка на наличие файла
+      // Получение локального адреса файла в системе
+      if (file.files[0].size < 1000000) {
+        errorMessage.style.display = 'none';
+        const src = URL.createObjectURL(file.files[0]);
+        image.src = src;
+      } else {
+        image.src = '';
+        file.value = '';
+        errorMessage.style.display = 'block';
+      }
     }
   });
 };

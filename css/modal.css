@@ -320,6 +320,24 @@
   margin: 0 auto;
 }
 
+.sendingImagePreviewWrapper {
+  max-height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sendingImagePreviewWrapper img {
+  height: 100%;
+}
+
+.error_message {
+  display: none;
+  color: red;
+  font-size: 18px;
+  text-align: center;
+}
+
 
 @media (max-width: 1000px) {
   .modal__fieldset {
