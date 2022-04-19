@@ -12,7 +12,6 @@
   <link rel="preload" href="fonts/inter-v7-latin_cyrillic-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="css/index.css">
-  <script src="js/goods.js" defer></script>
   <script type="module" src="js/scripts.js"></script>
   <title>CRM</title>
 </head>
@@ -71,7 +70,7 @@
   </section>
 
 
-  <div class="overlay">
+  <div class="overlay" id="overlay_goods">
     <div class="overlay__modal modal">
       <button class="modal__close">
         <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,8 +112,11 @@
 
           <label class="modal__label modal__label_category" for="category">
             <span class="modal__text">Категория</span>
-            <input class="modal__input" type="text" name="category" id="category" required>
+            <input class="modal__input" type="text" name="category" id="category" required list="category-list">
           </label>
+
+          <datalist id="category-list">
+          </datalist>
 
           <label class="modal__label modal__label_description" for="description">
             <span class="modal__text">Описание</span>
@@ -161,8 +163,48 @@
           </label>
 
           <button class="modal__submit" type="submit">Добавить товар</button>
+          <button class="modal__change" type="button">Изменить</button>
         </div>
       </form>
+
+      <!-- errors overlay -->
+      <div class="overlay" id="overlay_errors">
+        <div class="overlay__modal__error modal">
+          <button class="modal__close__error">
+            <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="m2 2 20 20M2 22 22 2" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+            </svg>
+          </button>
+
+          <div class="modal__error__wrapper">
+            <div class="error_img_wrapper">
+              <img src="/img/error-img.png" alt="">
+            </div>
+            <div>Что-то пошло не так</div>
+            <div class="modal__error__number"></div>
+          </div>
+
+        </div>
+      </div>
+      <!-- END errors overlay -->
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay_delete_goods">
+    <div class="overlay__modal__confirmdelete modal">
+      <button class="modal__close">
+        <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="m2 2 20 20M2 22 22 2" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+        </svg>
+      </button>
+
+      <div class="modal__deletegoods__wrapper">
+        <div>Вы действительно хотите удалить товар?</div>
+        <div class="modal__deletegoods__item"></div>
+        <div class="modal__deletegoods__item__id"></div>
+      </div>
+
+      <button class="modal__delete__goods" type="button">Удалить</button>
     </div>
   </div>
 

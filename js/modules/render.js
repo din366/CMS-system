@@ -1,4 +1,20 @@
-import { addItemInTable } from "./actions.js";
+import { addItemInTable, getItems, getSearch } from "./actions.js";
+
+const URLcategory = 'http://localhost:3000/api/category';
+
+/* create "item no found" message in table for search func */
+/* use in searchRenderGoods -> debounce */
+const errSearchMess = () => {
+  const tr = document.createElement('tr');
+  const td = document.createElement('td');
+
+  td.classList.add('error_search_message');
+  td.textContent = 'Товаров не найдено';
+  td.colSpan = 7;
+  td.style.padding = '20px';
+  tr.append(td);
+  document.querySelector('.table__body').append(tr);
+};
 
 export const createRow = (item) => {
   const { id, title, category, units, count, price } = item;
@@ -28,11 +44,49 @@ export const calculateTotalTablePrice = (data) => {
   document.querySelector(".crm__total-price").textContent = `$ ${resultValue}`;
 };
 
-export const renderGoods = (arr) => {
+// standart render goods (first render html and etc.)
+export const renderGoods = async () => {
+  document.querySelector('.table__body').textContent = ''; // clear table body
+  const arr = await getItems();
   for (const item of arr) {
     addItemInTable(item);
   }
-  // eslint-disable-next-line no-undef
-  calculateTotalTablePrice(dataGoods);
+
+  calculateTotalTablePrice(arr);
 };
 
+export const searchRenderGoods = async (e) => {
+  document.querySelector('.table__body').textContent = ''; // clear table body
+  const arr = await getSearch(e);
+  if (arr.length === 0) { // if arr length in responce = 0
+    errSearchMess(); // show error block when search result is null
+  } else {
+    for (const item of arr) {
+      addItemInTable(item);
+    }
+    calculateTotalTablePrice(arr);
+  }
+};
+
+/* render category items for modal */
+/* refresh every time the modal opens */
+export const createModalDataList = async () => {
+  try {
+    const responce = await fetch(`${URLcategory}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const categoryList = document.querySelector('#category-list');
+    categoryList.textContent = '';
+    const items = await responce.json();
+    items.map((item) => {
+      const option = document.createElement('option');
+      option.value = item;
+      categoryList.append(option);
+    });
+  } catch (err) {
+    console.log(`При формировании категорий произошла ошибка: ${err.message}`);
+  }
+};

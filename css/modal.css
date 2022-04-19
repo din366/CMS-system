@@ -32,6 +32,15 @@
   color: #6E6893;
 }
 
+.modal__close__error {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background-color: transparent;
+  border: none;
+  color: #6E6893;
+}
+
 .modal__close:hover {
   opacity: .6;
 }
@@ -313,6 +322,108 @@
   background-color: #6E6893;
 }
 
+.modal__change {
+  display: none;
+  font-weight: 600;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  line-height: 19px;
+  text-transform: uppercase;
+  background: #6D5BD0;
+  border-radius: 6px;
+  /* Backgrounds/Primary */
+
+  color: #FFFFFF;
+}
+
+.modal__change:hover {
+  background-color: #6E6893;
+}
+
+.modal__change:focus {
+  background-color: #6E6893;
+}
+
+.overlay__modal__confirmdelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.overlay__modal__error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.error_img_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__delete__goods {
+  font-weight: 600;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  line-height: 19px;
+  text-transform: uppercase;
+  background: #6D5BD0;
+  border-radius: 6px;
+  /* Backgrounds/Primary */
+
+  color: #FFFFFF;
+}
+
+.modal__delete__goods:hover {
+  background-color: #6E6893;
+}
+
+.modal__delete__goods:focus {
+  background-color: #6E6893;
+}
+
+.modal__deletegoods__wrapper {
+  margin-bottom: 20px;
+}
+
+.modal__deletegoods__wrapper div {
+  text-align: center;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.modal__deletegoods__wrapper div.modal__deletegoods__item {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.modal__error__wrapper {
+  margin-top: 50px;
+}
+
+.modal__error__wrapper div {
+  text-align: center;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.modal__error__wrapper div.modal__error__number {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.modal__error__wrapper div.error_img_wrapper {
+  margin-bottom: 40px;
+}
+
 .modal__footer {
   max-width: 523px;
   display: flex;
@@ -321,10 +432,12 @@
 }
 
 .sendingImagePreviewWrapper {
-  max-height: 40px;
+  max-height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .sendingImagePreviewWrapper img {
